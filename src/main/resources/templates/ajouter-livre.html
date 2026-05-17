@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter Livre</title>
+</head>
+<body>
+
+<h1>Ajouter un livre</h1>
+
+<form action="/livres/save" method="post">
+
+    <label>Titre :</label>
+    <input type="text" name="titre">
+
+    <br><br>
+
+    <label>ISBN :</label>
+    <input type="text" name="isbn">
+
+    <br><br>
+
+    <label>Date Publication :</label>
+    <input type="date" name="datePublication">
+
+    <br><br>
+
+    <label>Auteur :</label>
+    <select name="auteur.id">
+        <option value="">-- Choisir un auteur --</option>
+        <option th:each="auteur : ${auteurs}"
+                th:value="${auteur.id}"
+                th:text="${auteur.nom + ' ' + auteur.prenom}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Ajouter</button>
+
+</form>
+
+<br>
+
+<a href="/livres">Retour</a>
+
+</body>
+</html>

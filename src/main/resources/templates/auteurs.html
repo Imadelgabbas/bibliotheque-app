@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des auteurs</title>
+</head>
+<body>
+
+<h1>Liste des auteurs</h1>
+
+<a href="/">Accueil</a> | <a href="/livres">Voir les livres</a>
+
+<a href="/auteurs/ajouter">Ajouter Auteur</a>
+
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr th:each="auteur : ${auteurs}">
+        <td th:text="${auteur.id}"></td>
+        <td th:text="${auteur.nom}"></td>
+        <td th:text="${auteur.prenom}"></td>
+        <td>
+            <a th:href="@{/auteurs/edit/{id}(id=${auteur.id})}">Modifier</a> |
+            <a th:href="@{/auteurs/delete/{id}(id=${auteur.id})}">Supprimer</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des livres</title>
+</head>
+<body>
+
+<h1>Liste des livres</h1>
+
+<a href="/">Accueil</a>
+
+<a href="/livres/ajouter">Ajouter Livre</a>
+
+<br><br>
+
+<!-- Formulaire de recherche et filtres -->
+<form action="/livres" method="get">
+    <label>Rechercher par titre :</label>
+    <input type="text" name="titre" placeholder="Entrez un titre">
+
+    <label>Filtrer par auteur :</label>
+    <select name="auteurId">
+        <option value="">-- Tous les auteurs --</option>
+        <option th:each="auteur : ${auteurs}"
+                th:value="${auteur.id}"
+                th:text="${auteur.nom + ' ' + auteur.prenom}">
+        </option>
+    </select>
+
+    <label>Filtrer par date :</label>
+    <input type="date" name="datePublication">
+
+    <button type="submit">Rechercher</button>
+    <a href="/livres">Réinitialiser</a>
+</form>
+
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Titre</th>
+        <th>ISBN</th>
+        <th>Date Publication</th>
+        <th>Auteur</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr th:each="livre : ${livresPage.content}">
+        <td th:text="${livre.id}"></td>
+        <td th:text="${livre.titre}"></td>
+        <td th:text="${livre.isbn}"></td>
+        <td th:text="${livre.datePublication}"></td>
+        <td th:text="${livre.auteur != null ? livre.auteur.nom + ' ' + livre.auteur.prenom : 'Aucun'}"></td>
+        <td>
+            <a th:href="@{/livres/edit/{id}(id=${livre.id})}">Modifier</a> |
+            <a th:href="@{/livres/delete/{id}(id=${livre.id})}">Supprimer</a>
+        </td>
+    </tr>
+</table>
+
+<br><br>
+
+<!-- Navigation pagination -->
+<div>
+    <strong>Page <span th:text="${currentPage + 1}"></span> sur <span th:text="${totalPages}"></span></strong>
+
+    <br><br>
+
+    <!-- Lien Première page -->
+    <a th:if="${currentPage > 0}" href="/livres?page=0">Première</a>
+    <span th:if="${currentPage == 0}">Première</span>
+
+    <!-- Lien Précédent -->
+    <a th:if="${currentPage > 0}" th:href="@{/livres(page=${currentPage - 1})}">Précédent</a>
+    <span th:if="${currentPage == 0}">Précédent</span>
+
+    <!-- Numéros des pages -->
+    <span th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:if="${pageNum != currentPage}"
+           th:href="@{/livres(page=${pageNum})}"
+           th:text="${pageNum + 1}"></a>
+        <strong th:if="${pageNum == currentPage}" th:text="${pageNum + 1}"></strong>
+    </span>
+
+    <!-- Lien Suivant -->
+    <a th:if="${currentPage < totalPages - 1}" th:href="@{/livres(page=${currentPage + 1})}">Suivant</a>
+    <span th:if="${currentPage == totalPages - 1}">Suivant</span>
+
+    <!-- Lien Dernière page -->
+    <a th:if="${currentPage < totalPages - 1}" th:href="@{/livres(page=${totalPages - 1})}">Dernière</a>
+    <span th:if="${currentPage == totalPages - 1}">Dernière</span>
+</div>
+
+</body>
+</html>

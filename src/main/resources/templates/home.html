@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bibliothèque</title>
+</head>
+<body>
+
+<h1>Bienvenue dans la gestion de bibliothèque</h1>
+
+<br><br>
+
+<!-- Dashboard Statistique -->
+<h2>📊 Statistiques</h2>
+
+<div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0;">
+    <p><strong>Total Livres :</strong> <span th:text="${totalLivres}">0</span></p>
+    <p><strong>Total Auteurs :</strong> <span th:text="${totalAuteurs}">0</span></p>
+</div>
+
+<h3>📚 Dernier Livre ajouté :</h3>
+<div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0;">
+    <div th:if="${dernierLivre != null}">
+        <p><strong>Titre :</strong> <span th:text="${dernierLivre.titre}"></span></p>
+        <p><strong>ISBN :</strong> <span th:text="${dernierLivre.isbn}"></span></p>
+        <p><strong>Auteur :</strong> <span th:text="${dernierLivre.auteur != null ? dernierLivre.auteur.nom + ' ' + dernierLivre.auteur.prenom : 'Aucun'}"></span></p>
+    </div>
+    <div th:if="${dernierLivre == null}">
+        <p>Aucun livre ajouté pour le moment.</p>
+    </div>
+</div>
+
+<br><br>
+
+<!-- Navigation -->
+<h2>Navigation</h2>
+
+<a href="/livres">Voir les livres</a>
+<br>
+<a href="/auteurs">Voir les auteurs</a>
+
+</body>
+</html>
