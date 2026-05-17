@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Liste des livres</title>
@@ -16,8 +16,10 @@
 </div>
 
 <a href="/">Accueil</a>
-
-<a href="/livres/ajouter">Ajouter Livre</a>
+<a href="/livres/ajouter" sec:authorize="hasRole('ADMIN')">Ajouter Livre</a>
+<form th:action="@{/logout}" method="post" style="display: inline;">
+    <button type="submit">Déconnexion</button>
+</form>
 
 <br><br>
 
@@ -51,7 +53,7 @@
         <th>ISBN</th>
         <th>Date Publication</th>
         <th>Auteur</th>
-        <th>Actions</th>
+        <th sec:authorize="hasRole('ADMIN')">Actions</th>
     </tr>
 
     <tr th:each="livre : ${livresPage.content}">
@@ -60,7 +62,7 @@
         <td th:text="${livre.isbn}"></td>
         <td th:text="${livre.datePublication}"></td>
         <td th:text="${livre.auteur != null ? livre.auteur.nom + ' ' + livre.auteur.prenom : 'Aucun'}"></td>
-        <td>
+        <td sec:authorize="hasRole('ADMIN')">
             <a th:href="@{/livres/edit/{id}(id=${livre.id})}">Modifier</a> |
             <a th:href="@{/livres/delete/{id}(id=${livre.id})}">Supprimer</a>
         </td>
