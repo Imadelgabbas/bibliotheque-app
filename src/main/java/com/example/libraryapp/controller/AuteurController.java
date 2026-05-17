@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuteurController {
@@ -30,8 +31,13 @@ public class AuteurController {
     }
 
     @PostMapping("/auteurs/save")
-    public String saveAuteur(Auteur auteur) {
-        auteurRepository.save(auteur);
+    public String saveAuteur(Auteur auteur, RedirectAttributes redirectAttributes) {
+        try {
+            auteurRepository.save(auteur);
+            redirectAttributes.addFlashAttribute("success", "Auteur ajouté avec succès !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Erreur lors de l'ajout de l'auteur.");
+        }
         return "redirect:/auteurs";
     }
 
@@ -42,14 +48,24 @@ public class AuteurController {
     }
 
     @PostMapping("/auteurs/update")
-    public String updateAuteur(Auteur auteur) {
-        auteurRepository.save(auteur);
+    public String updateAuteur(Auteur auteur, RedirectAttributes redirectAttributes) {
+        try {
+            auteurRepository.save(auteur);
+            redirectAttributes.addFlashAttribute("success", "Auteur modifié avec succès !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Erreur lors de la modification de l'auteur.");
+        }
         return "redirect:/auteurs";
     }
 
     @GetMapping("/auteurs/delete/{id}")
-    public String deleteAuteur(@PathVariable Long id) {
-        auteurRepository.deleteById(id);
+    public String deleteAuteur(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            auteurRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", "Auteur supprimé avec succès !");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Erreur lors de la suppression de l'auteur. Il est peut-être lié à des livres.");
+        }
         return "redirect:/auteurs";
     }
 }

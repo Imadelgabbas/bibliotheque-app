@@ -8,6 +8,13 @@
 
 <h1>Liste des livres</h1>
 
+<div th:if="${success}" style="color: green;">
+    <p th:text="${success}"></p>
+</div>
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+
 <a href="/">Accueil</a>
 
 <a href="/livres/ajouter">Ajouter Livre</a>
