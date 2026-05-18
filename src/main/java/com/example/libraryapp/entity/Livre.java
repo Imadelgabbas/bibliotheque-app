@@ -15,6 +15,8 @@ public class Livre {
 
     private String datePublication;
 
+    private int stock;
+
     @ManyToOne
     private Auteur auteur;
 
@@ -51,6 +53,14 @@ public class Livre {
 
     public void setDatePublication(String datePublication) {
         this.datePublication = datePublication;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public Auteur getAuteur() {

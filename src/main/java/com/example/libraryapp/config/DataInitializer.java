@@ -23,6 +23,7 @@ public class DataInitializer {
         return args -> {
             if (userRepository.findByUsername("admin").isEmpty()
                     && userRepository.findByEmail("admin@gmail.com").isEmpty()) {
+
                 AppUser admin = new AppUser(
                         "admin",
                         "admin@gmail.com",
@@ -30,8 +31,8 @@ public class DataInitializer {
                         "ADMIN",
                         true
                 );
+
                 userRepository.save(admin);
-                System.out.println("Compte ADMIN 'admin@gmail.com' créé avec le mot de passe 'admin123'");
             }
         };
     }

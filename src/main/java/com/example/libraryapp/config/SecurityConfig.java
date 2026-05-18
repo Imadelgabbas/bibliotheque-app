@@ -24,6 +24,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**").permitAll() // Autoriser l'accès aux pages de connexion, d'inscription et ressources statiques
                         .requestMatchers("/h2-console/**").permitAll() // Pour H2 Console si utilisé (à désactiver en production)
+                        .requestMatchers("/mes-reservations", "/mes-reservations/**", "/reservations/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/reservations", "/admin/reservations/**").hasRole("ADMIN")
                         // Accès restreint aux ADMIN pour les actions de modification et ajout
                         .requestMatchers("/livres/ajouter", "/livres/save", "/livres/edit/**", "/livres/update", "/livres/delete/**").hasRole("ADMIN")
                         .requestMatchers("/auteurs/ajouter", "/auteurs/save", "/auteurs/edit/**", "/auteurs/update", "/auteurs/delete/**").hasRole("ADMIN")
